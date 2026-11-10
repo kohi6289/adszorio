@@ -17,6 +17,7 @@ export const ADMIN_NAV: { group: string; items: { href: string; label: string }[
       ...RESOURCES.filter((r) => r.group === "Privacy").map((r) => ({ href: `/admin/${r.key}`, label: r.label })),
       { href: "/admin/settings", label: "Settings" },
       { href: "/admin/audit", label: "Audit log" },
+      { href: "/admin/account", label: "My account" },
     ],
   },
 ];
