@@ -54,7 +54,7 @@ insert into public.faqs (id, category, platform_id, question, answer, sort_order
   ('00000000-0000-4000-8000-000000005001', 'General', null, 'Do you need my password?', 'No. We only ever need the public link to your profile, post or video. Never share your password with anyone, including us.', 1),
   ('00000000-0000-4000-8000-000000005002', 'General', null, 'Are results guaranteed to stay?', 'No. Platforms can remove engagement at any time. If a count drops within a service''s refill period we top it up free of charge; after the refill period ends, results are not guaranteed.', 2),
   ('00000000-0000-4000-8000-000000005003', 'General', null, 'How is engagement delivered?', 'Each service lists its delivery method in plain language on its page. Please read it before ordering.', 3),
-  ('00000000-0000-4000-8000-000000005004', 'Orders', null, 'How do I pay?', 'After you place an order we email you payment details. Your order starts once payment is confirmed.', 4),
+  ('00000000-0000-4000-8000-000000005004', 'Orders', null, 'How do I pay?', 'After you place an order, you'll be taken to WhatsApp to message us your order code. We reply there with payment details. Your order starts once payment is confirmed.', 4),
   ('00000000-0000-4000-8000-000000005005', 'Orders', null, 'Can I track my order?', 'Yes. Use your order code and email on the Track order page.', 5)
 on conflict (id) do nothing;
 
@@ -74,7 +74,7 @@ Platforms can remove engagement, limit reach or take action on accounts at any t
 - We will never ask for your password. Do not send it to us.
 
 ## 4. Orders and payment
-Prices are calculated in US dollars; other currencies are shown for convenience. After you place an order we email payment instructions. Work starts once payment is confirmed. We may decline or cancel any order, in which case any payment is refunded.
+Prices are calculated in US dollars; other currencies are shown for convenience. After you place an order you message us your order code on WhatsApp and we send payment instructions there. Work starts once payment is confirmed. We may decline or cancel any order, in which case any payment is refunded.
 
 ## 5. Refunds, refills and chargebacks
 See our [Refund & Refill Policy](/legal/refund-refill) and [Chargeback Policy](/legal/chargeback).

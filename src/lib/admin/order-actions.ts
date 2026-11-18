@@ -3,7 +3,7 @@
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { getSiteSettings } from "@/lib/data";
-import { sendEmail, siteUrl } from "@/lib/email";
+import { emailEnabled, sendEmail, siteUrl } from "@/lib/email";
 import { label } from "@/lib/format";
 import { ORDER_STATUSES, PAYMENT_STATUSES, type OrderStatus, type StatusEvent } from "@/types/models";
 import { audit, requireAdmin } from "./auth";
@@ -24,7 +24,7 @@ export async function setOrderStatus(id: string, fd: FormData) {
   const { db, user } = await requireAdmin();
   const status = String(fd.get("status")) as OrderStatus;
   const note = String(fd.get("note") ?? "").trim().slice(0, 500);
-  const notify = fd.get("notify") === "on";
+  const notify = emailEnabled() && fd.get("notify") === "on";
   if (!ORDER_STATUSES.includes(status)) back(id, "Invalid status");
 
   const { data: o } = await db.from("orders").select("status,status_history,requires_review,email,customer_name,order_code").eq("id", id).single();

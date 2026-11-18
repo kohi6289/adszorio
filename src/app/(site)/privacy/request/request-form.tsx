@@ -12,7 +12,7 @@ export function RequestForm() {
   const [state, action] = useActionState<ActionState, FormData>(submitDataRequest, { status: "idle" });
   const fe = state.status === "error" ? (state.fieldErrors ?? {}) : {};
   if (state.status === "success")
-    return <p role="status" className="flex gap-3 rounded-lg border border-border bg-surface p-5 font-medium"><CheckCircle2 aria-hidden className="size-5 text-success" />Request received. We&rsquo;ll verify it by email and respond within 30 days.</p>;
+    return <p role="status" className="flex gap-3 rounded-lg border border-border bg-surface p-5 font-medium"><CheckCircle2 aria-hidden className="size-5 text-success" />Request received. We&rsquo;ll respond within 30 days.</p>;
   return (
     <form action={action} noValidate className="relative grid gap-5 rounded-lg border border-border bg-surface p-5 md:p-7">
       <Honeypot />

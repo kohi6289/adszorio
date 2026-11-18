@@ -7,8 +7,8 @@ import { z } from "zod";
 import { fieldErrors, getPrivateSettings, notifyOwner, str, type ActionState } from "@/lib/actions-util";
 import { COUNTRY_CODES } from "@/lib/countries";
 import { CURRENCY_COOKIE } from "@/lib/currency";
-import { getCatalog, getCurrencies, getSiteSettings } from "@/lib/data";
-import { sendEmail, siteUrl } from "@/lib/email";
+import { getCatalog, getCurrencies } from "@/lib/data";
+import { siteUrl } from "@/lib/email";
 import { fmtInt, fmtUsd, LINK_LABEL } from "@/lib/format";
 import { validateLink } from "@/lib/links";
 import { ORDER_COOKIE } from "@/lib/order";
@@ -133,21 +133,13 @@ export async function createOrder(_prev: ActionState, fd: FormData): Promise<Act
     return { status: "error", message: "We couldn't save your order. Please try again, or contact us." };
   }
 
-  // ---- Emails (failures are logged, never block the order) ----
-  const settings = await getSiteSettings();
+  // ---- Owner notification (failures are logged, never block the order) ----
+  // The customer is not emailed: the confirmation page sends them to WhatsApp to get payment details.
   const shown = currency.code === "USD" ? fmtUsd(amountUsd) : `${fmtUsd(amountUsd)} (≈ ${amount.toFixed(2)} ${currency.code})`;
-  await Promise.all([
-    sendEmail({
-      to: c.email,
-      replyTo: settings.contact.email,
-      subject: `Order ${order.order_code} received — payment details to follow`,
-      text: `Hi ${c.name},\n\nThanks for your order with ${settings.brand}.\n\nOrder: ${order.order_code}\nItem: ${itemName}\nLink: ${links.join(", ")}\nTotal: ${shown}\n\nWe'll email you payment details shortly. Your order starts once payment is confirmed.\nTrack it any time: ${siteUrl(`/track?code=${order.order_code}`)}\n\nWe will never ask for your password.\n\n— ${settings.brand}`,
-    }),
-    notifyOwner(
+  await notifyOwner(
       `${flags.length ? "[REVIEW] " : ""}New order ${order.order_code}: ${itemName} — ${fmtUsd(amountUsd)}`,
       `Customer: ${c.name} <${c.email}> ${phone ?? ""}\nCountry: ${c.country} (IP: ${ipCountry ?? "unknown"})\nItem: ${itemName}\nLinks:\n${links.join("\n")}\nTotal: ${shown}\nRisk: ${flags.map((f) => RISK_LABEL[f]).join(", ") || "none"}\n\n${siteUrl("/admin/orders")}`,
-    ),
-  ]);
+  );
 
   (await cookies()).set(ORDER_COOKIE, order.order_code, { httpOnly: true, sameSite: "lax", path: "/", maxAge: 60 * 60 * 24, secure: process.env.NODE_ENV === "production" });
   redirect(`/order/confirmed?code=${order.order_code}`);
