@@ -1,11 +1,14 @@
-import { CheckCircle2, Mail } from "lucide-react";
+import { CheckCircle2, ListChecks } from "lucide-react";
 import type { Metadata } from "next";
 import { cookies } from "next/headers";
 import Link from "next/link";
 import { LocalTime } from "@/components/shared/local-time";
 import { Container } from "@/components/shared/section";
+import { WhatsAppRedirect } from "@/components/site/whatsapp-redirect";
 import { StatusBadge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { whatsappLink, whatsappNumber } from "@/lib/contact";
+import { getSiteSettings } from "@/lib/data";
 import { fmtInt, fmtUsd } from "@/lib/format";
 import { ORDER_COOKIE } from "@/lib/order";
 import { hasSupabase } from "@/lib/supabase/env";
@@ -23,7 +26,19 @@ export default async function ConfirmedPage({ searchParams }: { searchParams: Pr
         .eq("order_code", code).maybeSingle()
     : { data: null };
 
+  const settings = await getSiteSettings();
+  // The code in the URL is only echoed into the customer's own WhatsApp draft, so accept just the expected shape.
+  const orderCode = order?.order_code ?? (code && /^ADZ-\d{1,10}$/.test(code) ? code : null);
+
   const item = order ? ((order.services as unknown as { name: string } | null)?.name ?? `${(order.packages as unknown as { name: string } | null)?.name} package`) : "";
+
+  const total = order ? `${fmtUsd(Number(order.amount_usd))}${order.currency !== "USD" ? ` (≈ ${Number(order.amount).toFixed(2)} ${order.currency})` : ""}` : "";
+  const message = order
+    ? `Hi ${settings.brand}, I just placed an order.\n\nOrder: ${order.order_code}\nItem: ${order.services ? `${fmtInt(order.quantity)} × ` : ""}${item}\nLink: ${order.target_link.split("\n").join(", ")}\nTotal: ${total}\n\nPlease send me the payment details.`
+    : orderCode
+      ? `Hi ${settings.brand}, I just placed order ${orderCode}. Please send me the payment details.`
+      : `Hi ${settings.brand}, I just placed an order. Please send me the payment details.`;
+  const waHref = whatsappLink(whatsappNumber(settings.contact), message);
 
   return (
     <Container className="max-w-[720px] py-14 md:py-20">
@@ -32,7 +47,7 @@ export default async function ConfirmedPage({ searchParams }: { searchParams: Pr
       {order ? (
         <>
           <p className="mt-3 text-lg text-fg-muted">
-            Your order code is <span className="font-mono font-semibold text-fg">{order.order_code}</span>. We&rsquo;ve sent a confirmation to <span className="font-semibold text-fg">{order.email}</span>.
+            Your order code is <span className="font-mono font-semibold text-fg">{order.order_code}</span>. Keep it to track your order.
           </p>
           <dl className="mt-8 divide-y divide-border rounded-lg border border-border bg-surface">
             <div className="flex justify-between gap-4 p-4"><dt className="text-fg-muted">Item</dt><dd className="text-right font-medium">{order.services ? `${fmtInt(order.quantity)} × ` : ""}{item}</dd></div>
@@ -43,12 +58,13 @@ export default async function ConfirmedPage({ searchParams }: { searchParams: Pr
           </dl>
         </>
       ) : (
-        <p className="mt-3 text-lg text-fg-muted">Thanks! Check your email for your order code and payment details.</p>
+        <p className="mt-3 text-lg text-fg-muted">Thanks! {orderCode ? <>Your order code is <span className="font-mono font-semibold text-fg">{orderCode}</span>. </> : ""}Message us on WhatsApp to get your payment details.</p>
       )}
+      <WhatsAppRedirect href={waHref} orderKey={orderCode ?? "order"} />
       <div className="mt-8 rounded-lg bg-brand-soft p-5">
-        <p className="flex items-center gap-2 font-semibold text-fg"><Mail aria-hidden className="size-5 text-brand" />What happens next</p>
+        <p className="flex items-center gap-2 font-semibold text-fg"><ListChecks aria-hidden className="size-5 text-brand" />What happens next</p>
         <ol className="mt-2 list-decimal space-y-1 pl-6 text-fg-muted">
-          <li>We email you payment details (usually within support hours).</li>
+          <li>Send us your order on WhatsApp. We reply with payment details (usually within support hours).</li>
           <li>Once payment is confirmed, we record your starting count and begin.</li>
           <li>Track progress any time with your order code and email.</li>
         </ol>

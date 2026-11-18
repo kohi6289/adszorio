@@ -19,7 +19,7 @@ export function SettingsForm({ s, priv, currencies }: { s: SiteSettings; priv: {
       <Panel title="Contact (shown on the site)">
         <div className="grid gap-4 sm:grid-cols-2">
           <F fe={fe} name="contact_email" label="Support email" def={s.contact.email} type="email" />
-          <F fe={fe} name="whatsapp" label="WhatsApp number" hint="International format, e.g. +919800000000. Empty hides it." def={s.contact.whatsapp} />
+          <F fe={fe} name="whatsapp" label="WhatsApp number" hint="International format, e.g. +919800000000. Orders are sent here. Empty uses +918910361246." def={s.contact.whatsapp} />
           <F fe={fe} name="telegram" label="Telegram username" hint="Without @. Empty hides it." def={s.contact.telegram} />
           <Field id="s-socials" label="Social links" hint="One per line: Label | https://…" className="sm:col-span-2"><Textarea id="s-socials" name="socials" rows={3} defaultValue={s.socials.map((x) => `${x.label} | ${x.url}`).join("\n")} /></Field>
         </div>
@@ -58,7 +58,7 @@ export function SettingsForm({ s, priv, currencies }: { s: SiteSettings; priv: {
 
       <Panel title="Private: notifications & fraud (never shown on the site)">
         <div className="grid gap-4 sm:grid-cols-2">
-          <F fe={fe} name="notification_emails" label="Notification emails" hint="Comma-separated. Get an email for every order, flagged order, lead and privacy request." def={priv.notification_emails.join(", ")} wide />
+          <F fe={fe} name="notification_emails" label="Notification emails" hint="Comma-separated. Emails for new orders, leads and privacy requests start once email sending (Resend) is set up." def={priv.notification_emails.join(", ")} wide />
           <F fe={fe} name="first_order_max_usd" label="First-order review limit (USD)" hint="First orders above this are flagged for review." type="number" def={priv.first_order_max_usd} />
         </div>
       </Panel>

@@ -30,7 +30,7 @@ export default async function ServicePage({ params }: Props) {
   const related = catalog.services.filter((x) => x.category_id === s.category_id && x.id !== s.id).slice(0, 3);
 
   const timeline = [
-    { t: "Right after ordering", d: "You get an order code by email, with payment details." },
+    { t: "Right after ordering", d: "You get an order code and message us on WhatsApp for payment details." },
     { t: "After payment", d: `We record your current count, then start within ${s.start_time}.` },
     { t: "Delivery", d: `Delivered gradually at about ${s.speed}.` },
     { t: "Afterwards", d: s.refill_days ? `If the count drops within ${s.refill_days} days, we refill it free.` : "This service has no refill period." },

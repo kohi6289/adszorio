@@ -1,4 +1,4 @@
-import { ArrowRight, Link2, ListChecks, Mail, RefreshCcw, ShieldCheck, Clock3 } from "lucide-react";
+import { ArrowRight, Link2, ListChecks, MessageCircle, RefreshCcw, ShieldCheck, Clock3 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { headers } from "next/headers";
@@ -15,7 +15,7 @@ import { fmtInt } from "@/lib/format";
 const STEPS = [
   { icon: ListChecks, title: "Pick a service", body: "Choose a service or bundle and a quantity. The price, start time and refill period are shown before you commit." },
   { icon: Link2, title: "Paste a public link", body: "Your profile, post or video link. We never need your password or account access." },
-  { icon: Mail, title: "Pay and track", body: "We email payment details. Once paid, your order starts and you can track it with your order code." },
+  { icon: MessageCircle, title: "Pay and track", body: "Message us your order code on WhatsApp for payment details. Once paid, your order starts and you can track it with your order code." },
 ];
 
 export default async function HomePage() {

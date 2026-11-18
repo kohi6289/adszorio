@@ -211,7 +211,7 @@ export function OrderWizard({
             <Field id="o-name" label="Name" error={errors.name}>
               <Input id="o-name" name="name" autoComplete="name" value={name} onChange={(e) => setName(e.target.value)} {...describedBy("o-name", errors.name)} />
             </Field>
-            <Field id="o-email" label="Email" hint="Order updates and payment details go here." error={errors.email}>
+            <Field id="o-email" label="Email" hint="Used with your order code to track your order." error={errors.email}>
               <Input id="o-email" name="email" type="email" autoComplete="email" inputMode="email" value={email} onChange={(e) => setEmail(e.target.value)} {...describedBy("o-email", errors.email)} />
             </Field>
             <Field id="o-country" label="Country" error={errors.country}>
@@ -244,7 +244,7 @@ export function OrderWizard({
               <Row k="Total"><Price usd={totalUsd} className="text-lg font-semibold" /></Row>
             </dl>
             <p className="mt-4 rounded-md bg-surface-2 p-3 text-sm text-fg-muted">
-              <span className="font-semibold text-fg">Payment: </span>after you place the order we&rsquo;ll email payment details. Work starts once payment is confirmed. Prices are charged in USD; other currencies are shown for reference.
+              <span className="font-semibold text-fg">Payment: </span>after you place the order you&rsquo;ll be taken to WhatsApp to message us your order code, and we&rsquo;ll reply with payment details. Work starts once payment is confirmed. Prices are charged in USD; other currencies are shown for reference.
             </p>
           </section>
 

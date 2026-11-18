@@ -81,7 +81,7 @@ export const faqs: Faq[] = [
   { id: id(5001), category: "General", platform_id: null, question: "Do you need my password?", answer: "No. We only ever need the public link to your profile, post or video. Never share your password with anyone, including us.", sort_order: 1 },
   { id: id(5002), category: "General", platform_id: null, question: "Are results guaranteed to stay?", answer: "No. Platforms can remove engagement at any time. If a count drops within a service's refill period we top it up free of charge; after the refill period ends, results are not guaranteed.", sort_order: 2 },
   { id: id(5003), category: "General", platform_id: null, question: "How is engagement delivered?", answer: "Each service lists its delivery method in plain language on its page. Please read it before ordering.", sort_order: 3 },
-  { id: id(5004), category: "Orders", platform_id: null, question: "How do I pay?", answer: "After you place an order we email you payment details. Your order starts once payment is confirmed.", sort_order: 4 },
+  { id: id(5004), category: "Orders", platform_id: null, question: "How do I pay?", answer: "After you place an order, you'll be taken to WhatsApp to message us your order code. We reply there with payment details. Your order starts once payment is confirmed.", sort_order: 4 },
   { id: id(5005), category: "Orders", platform_id: null, question: "Can I track my order?", answer: "Yes. Use your order code and email on the Track order page.", sort_order: 5 },
 ];
 

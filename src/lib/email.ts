@@ -1,5 +1,8 @@
 import "server-only";
 
+/** True once RESEND_API_KEY is set; until then emails are only logged. */
+export const emailEnabled = () => Boolean(process.env.RESEND_API_KEY);
+
 // Transactional email via Resend's HTTP API. Without RESEND_API_KEY, emails are logged instead
 // so local development and early testing work without an account.
 export async function sendEmail(msg: { to: string | string[]; subject: string; text: string; replyTo?: string }) {

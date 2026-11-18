@@ -7,6 +7,7 @@ import { StatusBadge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input, Select, Textarea } from "@/components/ui/form";
 import { requireAdmin } from "@/lib/admin/auth";
+import { emailEnabled } from "@/lib/email";
 import { approveOrder, setFulfilment, setOrderStatus, setPayment } from "@/lib/admin/order-actions";
 import { adminDate } from "@/lib/admin/tz";
 import { countryName } from "@/lib/countries";
@@ -71,7 +72,7 @@ export default async function OrderDetail({ params, searchParams }: { params: Pr
             <form action={setOrderStatus.bind(null, o.id)} className="grid gap-3 sm:grid-cols-[12rem_1fr]">
               <Select aria-label="New status" name="status" defaultValue={o.status} className="h-11">{ORDER_STATUSES.map((s) => <option key={s} value={s}>{label(s)}</option>)}</Select>
               <Input aria-label="Note for the timeline (optional)" name="note" placeholder="Note shown on the customer's timeline (optional)" className="h-11" />
-              <label className="flex min-h-11 items-center gap-2 text-sm sm:col-span-2"><input type="checkbox" name="notify" defaultChecked className="size-4 accent-[var(--brand)]" />Email the customer about this change</label>
+              {emailEnabled() && <label className="flex min-h-11 items-center gap-2 text-sm sm:col-span-2"><input type="checkbox" name="notify" defaultChecked className="size-4 accent-[var(--brand)]" />Email the customer about this change</label>}
               <Button type="submit" size="sm" className="justify-self-start">Update status</Button>
             </form>
           </Panel>

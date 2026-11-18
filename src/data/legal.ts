@@ -21,7 +21,7 @@ Platforms can remove engagement, limit reach or take action on accounts at any t
 - We will never ask for your password. Do not send it to us.
 
 ## 4. Orders and payment
-Prices are calculated in US dollars; other currencies are shown for convenience. After you place an order we email payment instructions. Work starts once payment is confirmed. We may decline or cancel any order, in which case any payment is refunded.
+Prices are calculated in US dollars; other currencies are shown for convenience. After you place an order you message us your order code on WhatsApp and we send payment instructions there. Work starts once payment is confirmed. We may decline or cancel any order, in which case any payment is refunded.
 
 ## 5. Refunds, refills and chargebacks
 See our [Refund & Refill Policy](/legal/refund-refill) and [Chargeback Policy](/legal/chargeback).
